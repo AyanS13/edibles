@@ -16,16 +16,16 @@ from scipy.interpolate import CubicSpline
 
 
 ## Target
-target ='HD 149757'          
+target ='HD 147683'          
 
 # #======================== GETTING THE SPECTRUM ======================
 
-filename = '/HD149757/BLUE_437/HD149757_w437_blue_20180731_O15.fits'   #test[0]           #4
+filename = '/HD147683/BLUE_437/HD147683_w437_blue_20180902_O15.fits'   #test[0]           #4
 
 # wrange = [6707,6708.5]      #1
 # wrange = [6707.06,6708.1]   #2
 # wrange = [6706.85,6708.7]   #3
-wrange = [4231.5, 4233] #4
+wrange = [4231.75, 4233.25] #4
 
 print(filename)
 sp = EdiblesSpectrum(filename)
@@ -64,8 +64,8 @@ This is for continuum fitting using chebyshev polynomial.
 # degree = 2 
 # cheb_fit = Chebyshev.fit(norm_wavelength[mask], flux[mask], degree)
 
-anchor_points_wave = np.array([4231.5, 4231.75, 4231.9, 4232.1, 4232.5, 4232.7, 4233])
-anchor_points_flux = np.array([1.003, 1.003, 1.003, 1.001, 1.0005, 1.0005, 1.0005])
+anchor_points_wave = np.array([4231.75, 4232, 4232.25, 4232.5, 4232.7, 4233, 4233.25]) 
+anchor_points_flux = np.array([1.007, 1.003, 1.0, 1.0, 1.0, 1.001, 1.001])
 
 # Fit cubic splines to the anchor points
 cs = CubicSpline(anchor_points_wave, anchor_points_flux) # so the cubic spline routine is not really taking all the points into account. only anchors
@@ -84,7 +84,7 @@ z_DLA =  0
 
 wl = wave
 spec = normalized_flux
-err = np.full(len(wl), 0.0012)
+err = np.full(len(wl), 0.001)
 dataset = VoigtFit.DataSet(z_DLA)
 dataset.add_data(wl=wl, flux=spec, res=3,normalized=True)
 dataset.set_name(f'{target}_plot')
@@ -102,20 +102,22 @@ dataset.add_many_lines(['12CHI_1', '13CHI_2'])
 # -- Add components for each ion:
 
 #                      ion    z         b   logN
-dataset.add_component_velocity('12CHI', -15, 2.5, 13)   # towards left 
+dataset.add_component_velocity('12CHI', -2, 3, 12)   # towards left 
+dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+
+dataset.add_component_velocity('12CHI', 3, 3, 13)   # towards left 
 dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
 
-dataset.add_component_velocity('12CHI', -8, 4, 13)   # towards left 
+dataset.add_component_velocity('12CHI', 6, 3, 13)   # towards left 
 dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-# dataset.add_component_velocity('12CHI', -13, 3, 13)   # towards left 
-# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
-# # # dataset.prepare_dataset(norm=False, mask=False)
+# dataset.add_component_velocity('12CHI', -19, 3, 13)   # towards left 
+# # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+# # # # dataset.prepare_dataset(norm=False, mask=False)
 
-# dataset.add_component_velocity('12CHI', -1, 4, 12)   # towards left 
+# dataset.add_component_velocity('12CHI', -8, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
-
 
 dataset.prepare_dataset()
 
