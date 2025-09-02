@@ -16,11 +16,11 @@ from scipy.interpolate import CubicSpline
 
 
 ## Target
-target ='HD 113904' 
+target ='HD 152248' 
 
 # #======================== GETTING THE SPECTRUM ======================
 
-filename = '/HD113904/BLUE_437/HD113904_w437_blue_20141221_O15.fits'   #test[0]           #4
+filename = '/HD152248/BLUE_437/HD152248_w437_blue_20170509_O15.fits'   #test[0]           #4
 
 # wrange = [6707,6708.5]      #1
 # wrange = [6707.06,6708.1]   #2
@@ -64,8 +64,8 @@ This is for continuum fitting using chebyshev polynomial.
 # degree = 2 
 # cheb_fit = Chebyshev.fit(norm_wavelength[mask], flux[mask], degree)
 
-anchor_points_wave = np.array([4231.75, 4232, 4232.25, 4232.5, 4232.75, 4233, 4233.25]) 
-anchor_points_flux = np.array([1.0015, 1.0015, 1.0015, 1.0015, 1.0013, 1.0005, 1.00])
+anchor_points_wave = np.array([4231.75, 4232, 4232.25, 4232.4, 4232.5, 4232.75, 4233, 4233.15, 4233.25]) 
+anchor_points_flux = np.array([1.005, 1.004, 1.002, 1.001, 1.0005, 1.0005, 1.00, 0.999, 0.999])
 
 
 # Fit cubic splines to the anchor points
@@ -85,7 +85,7 @@ z_DLA =  0
 
 wl = wave
 spec = normalized_flux
-err = np.full(len(wl), 0.0015)
+err = np.full(len(wl), 0.00099)
 dataset = VoigtFit.DataSet(z_DLA)
 dataset.add_data(wl=wl, flux=spec, res=3,normalized=True)
 dataset.set_name(f'{target}_plot')
@@ -103,36 +103,47 @@ dataset.add_many_lines(['12CHI_1', '13CHI_2'])
 # -- Add components for each ion:
 
 #                      ion    z         b   logN
+# dataset.add_component_velocity('12CHI', -25, 3, 13)   # towards left 
+# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+
+# dataset.add_component_velocity('12CHI', -20, 3, 13)   # towards left 
+
+# dataset.add_component_velocity('12CHI', -9, 3, 12)   # towards left 
+
+# dataset.add_component_velocity('12CHI', -25y
+# , 3, 12)   # towards left 
+
+# dataset.add_component_velocity('12CHI', -18, 3, 13)   # towards left 
+# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+
 # dataset.add_component_velocity('12CHI', 13, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-# dataset.add_component_velocity('12CHI', -24, 3, 13)   # towards left 
+dataset.add_component_velocity('12CHI', -8, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-# dataset.add_component_velocity('12CHI', -22, 3, 13)   # towards left 
-# # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+dataset.add_component_velocity('12CHI', 0, 5, 13)   # towards left 
 
-
-# dataset.add_component_velocity('12CHI', -25.3, 3, 13)   # towards left 
+# dataset.add_component_velocity('12CHI', 0, 3, 12)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
 # # # # # dataset.prepare_dataset(norm=False, mask=False)
 
-dataset.add_component_velocity('12CHI', 1, 3, 13)   # towards left 
+dataset.add_component_velocity('12CHI', 3, 3, 12)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-# dataset.add_component_velocity('12CHI', -10, 3, 13)   # towards left 
-# # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
-
-
-# dataset.add_component_velocity('12CHI', 15, 3, 13)   # towards left 
-# # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
-
-# dataset.add_component_velocity('12CHI', 10, 3, 13)   # towards left 
+# dataset.add_component_velocity('12CHI', -16, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
 
-# dataset.add_component_velocity('12CHI', -25.3, 3, 13)   # towards left 
+# dataset.add_component_velocity('12CHI', -17, 3, 13)   # towards left 
+# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+
+# dataset.add_component_velocity('12CHI', -18, 3, 13)   # towards left 
+# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+
+
+# dataset.add_component_velocity('12CHI', 23, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
 # dataset.add_component_velocity('12CHI', 11, 3, 12)   # towards left 
