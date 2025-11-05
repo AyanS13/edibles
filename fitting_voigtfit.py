@@ -16,16 +16,16 @@ from scipy.interpolate import CubicSpline
 
 
 ## Target
-target ='HD 61827' 
+target ='HD 80558' 
 
 # #======================== GETTING THE SPECTRUM ======================
 
-filename = '/HD61827/BLUE_437/HD61827_w437_blue_20180317_O15.fits'   #test[0]           #4
+filename = '/HD80558/BLUE_437/HD80558_w437_blue_20150630_O15.fits'   #test[0]           #4
 
 # wrange = [6707,6708.5]      #1
 # wrange = [6707.06,6708.1]   #2
 # wrange = [6706.85,6708.7]   #3
-wrange = [4232.35, 4233.85] #4
+wrange = [4231.75, 4233.25] #4
 
 print(filename)
 sp = EdiblesSpectrum(filename)
@@ -64,8 +64,8 @@ This is for continuum fitting using chebyshev polynomial.
 # degree = 2 
 # cheb_fit = Chebyshev.fit(norm_wavelength[mask], flux[mask], degree)
 
-anchor_points_wave = np.array([4232.35, 4232.55, 4232.75, 4233, 4233.15, 4233.25, 4233.45, 4233.65, 4233.85]) 
-anchor_points_flux = np.array([1.011, 1.011, 1.011, 1.009, 1.006, 1.004, 0.996, 0.987, 0.98])
+anchor_points_wave = np.array([4231.75, 4232, 4232.25, 4232.5, 4232.75, 4233, 4233.25]) 
+anchor_points_flux = np.array([1.0145, 1.0145, 1.011, 1.0025, 0.985, 0.957, 0.932])
 
 
 # Fit cubic splines to the anchor points
@@ -85,7 +85,7 @@ z_DLA =  0
 
 wl = wave
 spec = normalized_flux
-err = np.full(len(wl), 0.0013)
+err = np.full(len(wl), 0.0027)
 dataset = VoigtFit.DataSet(z_DLA)
 dataset.add_data(wl=wl, flux=spec, res=3,normalized=True)
 dataset.set_name(f'{target}_plot')
@@ -113,24 +113,24 @@ dataset.add_many_lines(['12CHI_1', '13CHI_2'])
 # dataset.add_component_velocity('12CHI', -25y
 # , 3, 12)   # towards left 
 
-# dataset.add_component_velocity('12CHI', -8, 3, 13)   # towards left 
+# dataset.add_component_velocity('12CHI', 22, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-# dataset.add_component_velocity('12CHI', -7, 3, 13)   # towards left 
+dataset.add_component_velocity('12CHI', 18.6, 4, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-dataset.add_component_velocity('12CHI', 36, 3, 13)   # towards left 
-dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+dataset.add_component_velocity('12CHI', 13.6, 1, 12)   # towards left 
+# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-dataset.add_component_velocity('12CHI', 40, 4, 13)   # towards left 
-dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
+dataset.add_component_velocity('12CHI', 9, 5, 12)   # towards left 
+# dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
-# dataset.add_component_velocity('12CHI', -11, 3, 13)   # towards left 
+# dataset.add_component_velocity('12CHI', 29, 3, 13)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
 # # # # # dataset.prepare_dataset(norm=False, mask=False)
 
-# dataset.add_component_velocity('12CHI', 3, 3, 12)   # towards left 
+# dataset.add_component_velocity('12CHI', 43, 5, 12)   # towards left 
 # dataset.copy_components(from_ion='12CHI',to_ion='13CHI',tie_b=True)
 
 # dataset.add_component_velocity('12CHI', -16, 3, 13)   # towards left 
@@ -264,28 +264,3 @@ append_best_fit_to_pdf(existing_pdf_path, existing_pdf_path, best_fit_text)
 #     # Save the plot to the PDF (this will be the second page)
 #     pdf.savefig()
 #     plt.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
