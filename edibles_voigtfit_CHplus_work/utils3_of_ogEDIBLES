@@ -1,1 +1,44 @@
+use the local_continuum spline given here.
+everything else was unchanged.
+
+things that have been used: 
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+from edibles.utils.local_continuum_spline import *
+
+from edibles.utils.final_voigt_profile import *
+from edibles.utils.final_fitter import *
+
+from edibles.utils.edibles_oracle import EdiblesOracle
+from edibles.utils.edibles_spectrum import EdiblesSpectrum 
+## in the earlier codes these 2 lines were not needed as this ipynb file used to sit inside the edibles/utils/ folder.
+
+
+from IPython.display import display, Math
+
+from scipy.interpolate import CubicSpline
+
+
+from edibles.utils3.model import *
+
+
+
+
+
+
+
+and  fitting_voigtfit.py
+
+
+
+
+
+
+
+
+
 
